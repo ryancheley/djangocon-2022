@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'project1',
+    'project2',
 ]
 
 MIDDLEWARE = [
@@ -75,13 +78,30 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "postgres",
-        "USER": "postgres",
-        "PASSWORD": "postgres",
-        "HOST": "db",  # set in docker-compose.yml
-        "PORT": 5432,  # default postgres port
-    }
+            'ENGINE': 'mssql',
+            'NAME': 'DWDOHC',
+            'USER': 'sa',
+            'PASSWORD': 'Abc123++',
+            'HOST': 'mssql_2017',
+            'PORT': '1433',
+
+            'OPTIONS': {
+                'driver': 'ODBC Driver 17 for SQL Server',
+            },
+        },
+    "ezcap": {
+            'ENGINE': 'mssql',
+            'NAME': 'EXTENSION',
+            'USER': 'SA',
+            'PASSWORD': 'Abc123++',
+            'HOST': 'ezcap',
+            'PORT': '1433',
+
+            'OPTIONS': {
+                'driver': 'ODBC Driver 17 for SQL Server',
+            },
+        }
+
 }
 
 

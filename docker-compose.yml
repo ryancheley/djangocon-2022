@@ -3,6 +3,7 @@ version: "3.9"
 services:
   web:
     build: .
+    container_name: django
     command: python /code/manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/code
@@ -10,13 +11,30 @@ services:
       - 8000:8000
     depends_on:
       - db
+      - db-ezcap
   db:
-    image: postgres:13
+    build: ./mssql
+    container_name: mssql_2017
+    hostname: dohc-dw
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - mssql_data:/var/opt/mssql
     environment:
-      - "POSTGRES_HOST_AUTH_METHOD=trust"
-
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Abc123++
+    ports:
+      - "1433:1433"
+  db-ezcap:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    container_name: ezcap
+    hostname: ezcap
+    volumes:
+      - mssql_data_ezcap:/var/opt/mssql
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Abc123++
+    ports:
+      - "1434:1433"
 volumes:
-  postgres_data:
+  mssql_data:
+  mssql_data_ezcap:
   static:
